@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Reels from '../components/Reels.astro';
-import { SITE, STATS, BRANDS, TESTIMONIALS, EXPECTATIONS } from '../data/site.mjs';
+import { SITE, STATS, BRANDS, TESTIMONIALS, EXPECTATIONS, RESULTS } from '../data/site.mjs';
 import portfolio from '../data/portfolio.json';
 
 const featured = ['sandtown-pizza', 'lemon-lab', 'chained-and-charmed', 'toydash',
@@ -138,6 +138,53 @@ const featured = ['sandtown-pizza', 'lemon-lab', 'chained-and-charmed', 'toydash
     </div>
   </section>
 
+
+  <!-- "A results section featuring engagement metrics, video views, and success stories
+       from past campaigns." Every number here is sourced — the per-reel figures are the
+       brand's own, from their DM. Never pad this with estimates. -->
+  <section class="section results" id="results">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Results</p>
+        <h2>What the work<br /><em>did</em>.</h2>
+        <p class="lede">
+          Pretty content is the easy part. Here&rsquo;s what it actually returned for the
+          businesses it was made for.
+        </p>
+      </div>
+
+      <div class="res">
+        <figure class="res__hero">
+          <p class="res__v">{RESULTS.featured.value}</p>
+          <p class="res__l">{RESULTS.featured.label}</p>
+          <p class="res__d">{RESULTS.featured.detail}</p>
+          <blockquote class="res__q"><p>&ldquo;{RESULTS.featured.quote}&rdquo;</p></blockquote>
+        </figure>
+        <div class="res__side">
+          {RESULTS.stats.map(s => (
+            <div class="res__stat">
+              <p class="res__sv">{s.value}</p>
+              <div>
+                <p class="res__sl">{s.label}</p>
+                <p class="res__sn">{s.note}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="stories">
+        {RESULTS.stories.map(st => (
+          <article class="story">
+            <p class="story__b">{st.brand}</p>
+            <h3>{st.outcome}</h3>
+            <p class="story__x">{st.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <section class="section section--sage">
     <div class="wrap">
       <div class="expect">
@@ -242,5 +289,39 @@ const featured = ['sandtown-pizza', 'lemon-lab', 'chained-and-charmed', 'toydash
   .expect__list li:last-child { border-bottom: 0; }
   @media (max-width: 800px) { .expect { grid-template-columns: 1fr; } }
 
-  .cta { background: var(--cream); }
+
+  .results { background: var(--cream); }
+  .res { display: grid; grid-template-columns: 1.25fr 1fr; gap: clamp(1.4rem, 3vw, 2.2rem);
+    align-items: stretch; margin-bottom: clamp(1.4rem, 3vw, 2.2rem); }
+  .res__hero { margin: 0; background: var(--sage); color: #fff; border-radius: var(--radius);
+    padding: clamp(1.8rem, 4vw, 3rem); display: flex; flex-direction: column; }
+  .res__v { font-family: var(--display); font-size: clamp(4rem, 9vw, 7rem); line-height: .9;
+    font-weight: 300; margin: 0; letter-spacing: -.03em;
+    font-variant-numeric: lining-nums tabular-nums; font-feature-settings: 'lnum' 1, 'tnum' 1; }
+  .res__l { font-size: 1.05rem; margin: .6rem 0 1.1rem; color: rgba(255,255,255,.95); }
+  .res__d { font-size: .9rem; color: rgba(255,255,255,.78); margin: 0 0 1.4rem; max-width: 40ch; }
+  .res__q { margin: auto 0 0; border-top: 1px solid rgba(255,255,255,.28); padding-top: 1.2rem; }
+  .res__q p { font-family: var(--display); font-size: clamp(1.15rem, 2vw, 1.45rem);
+    font-style: italic; margin: 0; color: var(--cream); line-height: 1.3; }
+  .res__side { display: flex; flex-direction: column; gap: 1px; background: var(--line);
+    border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .res__stat { background: var(--paper); padding: clamp(1.2rem, 2.4vw, 1.8rem); flex: 1;
+    display: flex; align-items: center; gap: 1.2rem; }
+  .res__sv { font-family: var(--display); font-size: clamp(2rem, 3.4vw, 2.7rem); line-height: 1;
+    font-weight: 300; color: var(--rock); margin: 0; min-width: 3.6em; letter-spacing: -.02em;
+    font-variant-numeric: lining-nums tabular-nums; font-feature-settings: 'lnum' 1, 'tnum' 1; }
+  .res__sl { margin: 0; font-size: .95rem; }
+  .res__sn { margin: .15rem 0 0; font-size: .72rem; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--muted); }
+  @media (max-width: 800px) { .res { grid-template-columns: 1fr; } }
+
+  .stories { display: grid; gap: 1.4rem; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+  .story { background: var(--paper); border-radius: var(--radius);
+    padding: clamp(1.5rem, 2.6vw, 2rem); border-top: 2px solid var(--rock); }
+  .story__b { font-size: .66rem; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--rock); font-weight: 600; margin: 0 0 .7rem; }
+  .story h3 { font-size: 1.28rem; margin-bottom: .7rem; }
+  .story__x { color: var(--muted); font-size: .93rem; margin: 0; }
+
+  .cta { background: var(--paper); }
 </style>

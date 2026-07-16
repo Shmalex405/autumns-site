@@ -22,7 +22,8 @@ for (const it of ITEMS) {
   } catch { console.warn(`  ⚠ skipping ${it.slug} — media missing`); continue; }
   const { size } = await fs.stat(mp4);
   out.push({
-    slug: it.slug, title: it.title, brand: it.brand, cat: it.cat, desc: it.desc,
+    slug: it.slug, title: it.title, brand: it.brand, cat: it.cat,
+    goal: it.goal, desc: it.desc,
     hero: !!it.hero, dur: await dur(mp4), mb: +(size / 1048576).toFixed(1),
   });
 }

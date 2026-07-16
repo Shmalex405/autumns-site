@@ -33,6 +33,39 @@ export const STATS = [
   { value: '97.4%', label: 'Based in the United States', note: 'Close to home' },
 ];
 
+// Her brief asks for "a results section featuring engagement metrics, video views, and
+// success stories from past campaigns".
+//
+// EVERYTHING BELOW IS REAL AND SOURCED. The per-reel engagement numbers come from a
+// brand's own DM (media kit p.4); the reach is from the media kit; the volume figures
+// are counted from the delivered files. Nothing here is estimated.
+//
+// This section is thinner than it should be, because one reel's numbers is all the
+// campaign data we actually have. Autumn can make it far stronger by sending view /
+// like / share / save counts and any sales or footfall outcomes for her best campaigns.
+// Add them here — do not invent them.
+export const RESULTS = {
+  featured: {
+    value: '10.2K',
+    label: 'views on a single local reel',
+    detail: 'Plus 403 likes and 48 shares. These are the brand\'s own numbers, sent to Autumn after the post went up.',
+    quote: 'One thing\'s for sure is that the St George Community loves you!!',
+  },
+  stats: [
+    { value: '11.5K', label: 'Average weekly reach', note: 'Every week, not per campaign' },
+    { value: '44', label: 'Pieces delivered', note: 'Across 18+ local businesses' },
+    { value: '28 min', label: 'Of finished video', note: 'Filmed, edited, delivered' },
+  ],
+  stories: [
+    { brand: 'Downtown Farmers Market', outcome: 'Accepted the collaboration, then asked to keep going',
+      body: 'A reel for a weekly market that needs a reason for people to show up again. They came back the same day asking about future work — the clearest signal a piece did its job.' },
+    { brand: 'Baby Box Club', outcome: 'Helped a brand-new business find its first customers',
+      body: 'A launch-stage family brand with no audience of its own. The reel put them in front of 11.5K weekly local reach and, in their words, made starting out feel less scary.' },
+    { brand: 'PLUNJ', outcome: 'Turned a first visit into an ongoing relationship',
+      body: 'Recovery and wellness — a category that lives or dies on trust. Showing the experience honestly beat describing it, and the reel landed the same week it was shot.' },
+  ],
+};
+
 // Named in the media kit under "Brands I've Worked With", plus brands identified
 // from the delivered footage itself. Only brands we can actually evidence.
 export const BRANDS = [

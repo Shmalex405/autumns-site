@@ -24,6 +24,7 @@ const mmss = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
       data-title={it.title}
       data-brand={it.brand ?? ''}
       data-desc={it.desc}
+      data-goal={it.goal ?? ''}
       aria-label={`Play ${it.title}${it.brand ? ` for ${it.brand}` : ''}`}
     >
       <img
@@ -52,7 +53,10 @@ const mmss = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
     <div class="lb__meta">
       <p class="lb__brand" data-lb-brand></p>
       <h2 class="lb__title" data-lb-title></h2>
-      <p class="lb__desc" data-lb-desc></p>
+      <div class="lb__rows">
+        <p class="lb__row" data-lb-goal-row><span>The goal</span><em data-lb-goal></em></p>
+        <p class="lb__row"><span>The style</span><em data-lb-desc></em></p>
+      </div>
     </div>
   </div>
 </dialog>
@@ -79,7 +83,11 @@ const mmss = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
     color: var(--sage-deep); font-weight: 600; margin: 0 0 .7rem; min-height: 1em;
   }
   .lb__title { font-size: clamp(1.7rem, 3.4vw, 2.5rem); margin: 0 0 .9rem; }
-  .lb__desc { color: var(--muted); margin: 0; max-width: 46ch; }
+  .lb__rows { display: flex; flex-direction: column; gap: 1.1rem; max-width: 46ch; }
+  .lb__row { margin: 0; display: flex; flex-direction: column; gap: .3rem; }
+  .lb__row > span { font-size: .62rem; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--sage-deep); font-weight: 600; }
+  .lb__row > em { font-style: normal; color: var(--muted); }
   .lb__x {
     position: absolute; top: -2.6rem; right: 0; width: 2.2rem; height: 2.2rem;
     border: 0; border-radius: 50%; background: rgba(255,255,255,.16); color: #fff;
@@ -99,16 +107,20 @@ const mmss = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
   const elBrand = document.querySelector('[data-lb-brand]');
   const elTitle = document.querySelector('[data-lb-title]');
   const elDesc = document.querySelector('[data-lb-desc]');
+  const elGoal = document.querySelector('[data-lb-goal]');
+  const goalRow = document.querySelector('[data-lb-goal-row]') as HTMLElement | null;
   let lastFocus: HTMLElement | null = null;
 
   document.querySelectorAll<HTMLButtonElement>('.reel').forEach((card) => {
     card.addEventListener('click', () => {
       if (!lb || !video) return;
       lastFocus = card;
-      const { slug, title, brand, desc } = card.dataset;
+      const { slug, title, brand, desc, goal } = card.dataset;
       if (elBrand) { elBrand.textContent = brand || ''; }
       if (elTitle) elTitle.textContent = title ?? '';
       if (elDesc) elDesc.textContent = desc ?? '';
+      if (elGoal) elGoal.textContent = goal ?? '';
+      if (goalRow) goalRow.hidden = !goal;
       // Fetch starts here and nowhere earlier.
       video.src = `/media/video/${slug}.mp4`;
       video.poster = `/media/poster/${slug}.jpg`;

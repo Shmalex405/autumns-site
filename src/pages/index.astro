@@ -10,7 +10,7 @@ const featured = ['sandtown-pizza', 'lemon-lab', 'chained-and-charmed', 'toydash
 ---
 <Base
   title="UGC & Content Creation in St. George, Utah"
-  description="Autumn Flowers (@stgeorgemama) makes authentic, scroll-stopping video for brands in St. George and Southern Utah. UGC, product showcases, lifestyle content and FPV drone."
+  description="Autumn Flowers (@stgeorgemama) creates professional content that helps Southern Utah businesses grow their visibility, build trust and drive sales. UGC, product showcases, lifestyle content and FPV drone."
 >
   <section class="hero">
     <video class="hero__v" autoplay muted loop playsinline preload="metadata"
@@ -21,10 +21,11 @@ const featured = ['sandtown-pizza', 'lemon-lab', 'chained-and-charmed', 'toydash
     <div class="wrap hero__in">
       <div class="hero__col">
         <p class="hero__eyebrow">UGC creator &amp; videographer &middot; {SITE.location}</p>
-        <h1>Content that stops <em>the scroll</em> — and sells.</h1>
+        <h1>Content that connects you with <em>your audience</em>.</h1>
         <p class="hero__lede">
-          I&rsquo;m Autumn. I help Southern Utah brands make authentic video that connects
-          with the people actually buying: parents, and mostly mums.
+          I&rsquo;m Autumn &mdash; a content creator and videographer in Southern Utah. I make
+          professional content that helps businesses grow their visibility, build trust,
+          and drive sales.
         </p>
         <div class="btn-row">
           <a href="/contact/" class="btn btn--solid">Work with me</a>
@@ -35,16 +36,18 @@ const featured = ['sandtown-pizza', 'lemon-lab', 'chained-and-charmed', 'toydash
     <a href="#proof" class="hero__down" aria-label="Skip to the numbers"><span></span></a>
   </section>
 
-  <!-- Reach leads, not follower count: 11.5K weekly reach on 1.7K followers is the
-       genuinely strong number, and 40.4% local is what a St. George business buys. -->
+  <!-- Reach leads, not follower count. 11.5K weekly reach on 1.7K followers is the
+       genuinely strong number, and 40.4% local is what matters to a St. George
+       business — but say it warmly, and never draw attention to the follower count. -->
   <section class="section" id="proof">
     <div class="wrap">
       <div class="head">
         <p class="eyebrow">The numbers</p>
-        <h2>Small following.<br /><em>Loud</em> in St. George.</h2>
+        <h2>Real reach,<br /><em>right here</em>.</h2>
         <p class="lede">
-          A follower count is vanity. What matters to your business is how many local
-          people see the thing, and whether they&rsquo;re the ones who buy. Mine are.
+          The number worth watching isn&rsquo;t a follower count &mdash; it&rsquo;s how many people
+          see your content, and how many of them are close enough to stop by.
+          Here&rsquo;s who&rsquo;s watching.
         </p>
       </div>
       <div class="stats">
@@ -98,8 +101,8 @@ const featured = ['sandtown-pizza', 'lemon-lab', 'chained-and-charmed', 'toydash
         <p class="eyebrow">Featured work</p>
         <h2>Recent <em>collaborations</em></h2>
         <p class="lede">
-          Restaurants, markets, home builders, family brands and a fair amount of red rock.
-          Tap any of them to watch.
+          Restaurants, local markets, home builders, tourism, beauty and a fair amount of
+          red rock. Tap any of them to watch.
         </p>
       </div>
       <Reels items={featured} />
@@ -121,8 +124,8 @@ const featured = ['sandtown-pizza', 'lemon-lab', 'chained-and-charmed', 'toydash
   <section class="section">
     <div class="wrap">
       <div class="head">
-        <p class="eyebrow">What brands are saying</p>
-        <h2>Straight from<br />the <em>DMs</em>.</h2>
+        <p class="eyebrow">Testimonials</p>
+        <h2>What brands<br />are <em>saying</em>.</h2>
       </div>
       <div class="quotes">
         {TESTIMONIALS.map(t => (
@@ -157,8 +160,7 @@ const featured = ['sandtown-pizza', 'lemon-lab', 'chained-and-charmed', 'toydash
     <div class="wrap wrap--narrow" style="text-align:center">
       <h2>Let&rsquo;s <em>team up</em>.</h2>
       <p class="lede" style="margin:1.2rem auto 2rem">
-        Tell me what you&rsquo;re launching and roughly what you want to spend.
-        No pitch deck required.
+        Tell me a little about what you&rsquo;re working on &mdash; I&rsquo;d love to hear about it.
       </p>
       <div class="btn-row" style="justify-content:center">
         <a href="/contact/" class="btn btn--rock">Start a project</a>

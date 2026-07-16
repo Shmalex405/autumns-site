@@ -13,14 +13,14 @@ export const SITE = {
   tagline: 'Content creator / videographer / UGC creator',
 };
 
-// GitHub Pages serves static files only — there is no backend to POST the enquiry form
+// GitHub Pages serves static files only — there is no backend to POST the inquiry form
 // to, so it relays through Web3Forms (free tier: 250 submissions/month, well above her
 // volume). Their access key is a *publishable* identifier, not a secret: it is embedded
 // in client-side HTML by design, the same way a reCAPTCHA site key is, and it only ever
 // delivers to the inbox it was issued for. Set PUBLIC_WEB3FORMS_KEY as a repository
 // variable so it is injected at build time rather than living in source. Until it is
 // set, the form tells people to email Autumn directly instead of silently swallowing
-// enquiries — a dead contact form is worse than no contact form.
+// inquiries — a dead contact form is worse than no contact form.
 export const FORM = {
   accessKey: import.meta.env.PUBLIC_WEB3FORMS_KEY ?? 'REPLACE_ME__unset',
 };
@@ -28,9 +28,9 @@ export const FORM = {
 // Media kit, page 2.
 export const STATS = [
   { value: '11.5K', label: 'Average weekly Instagram reach', note: 'Media kit, 2026' },
-  { value: '40.4%', label: 'Of that audience is in St. George', note: 'Local by a mile' },
-  { value: '85.8%', label: 'Women, mostly 25–34', note: 'Parents making the buying calls' },
-  { value: '97.4%', label: 'United States', note: 'No hollow overseas reach' },
+  { value: '40.4%', label: 'Of that audience is in St. George', note: 'Right down the road' },
+  { value: '85.8%', label: 'Women, mostly 25–34', note: 'Often the ones deciding' },
+  { value: '97.4%', label: 'Based in the United States', note: 'Close to home' },
 ];
 
 // Named in the media kit under "Brands I've Worked With", plus brands identified
@@ -85,7 +85,7 @@ export const CONTENT_DAY = [
   { name: 'FPV Drone', price: '$400', unit: '/ hour',
     blurb: 'Aerial and first-person-view work across Southern Utah.',
     features: ['On-location filming and photo session',
-      'Mix of clips and photo content', 'Basic colour correction and stabilisation',
+      'Mix of clips and photo content', 'Basic color correction and stabilization',
       'Delivered within 24–48 hours', 'One edited reel formatted for Instagram and TikTok'] },
 ];
 
@@ -105,27 +105,27 @@ export const EXPECTATIONS = [
 ];
 
 export const SERVICES = [
-  { title: 'UGC video', body: 'Vertical video made to look like a recommendation from a friend, not an advert. Reels, TikTok and Shorts, concept through final cut.' },
-  { title: 'Product showcases', body: 'Your product in real hands in a real kitchen. Close-focus detail work and the in-use shots that answer a buyer\'s question before they ask it.' },
-  { title: 'Lifestyle content', body: 'Family-led storytelling built around how a product actually fits into a busy morning — the reason a parent stops scrolling.' },
-  { title: 'FPV drone footage', body: 'Aerial and first-person-view flying across Southern Utah\'s red rock. The shot most local creators simply cannot deliver.' },
-  { title: 'Event coverage', body: 'Markets, launches, openings and pop-ups covered live, with a cut turned around while the event is still worth posting about.' },
-  { title: 'Short-form editing', body: 'Send your own footage and get back a finished reel — branded overlays, trending audio, captions, custom cover, formatted per platform.' },
+  { title: 'UGC video', body: 'Vertical video that feels like a recommendation from someone you trust rather than an ad. Reels, TikTok and Shorts, from first concept through final cut.' },
+  { title: 'Product showcases', body: 'Your product in real hands, in a real setting. Close-focus detail and in-use moments that answer a customer\'s question before they think to ask it.' },
+  { title: 'Lifestyle content', body: 'Storytelling built around how your product actually fits into someone\'s day — the reason a viewer slows down and pays attention.' },
+  { title: 'FPV drone footage', body: 'Aerial and first-person-view flying across Southern Utah\'s red rock, giving a familiar place a perspective people haven\'t seen before.' },
+  { title: 'Event coverage', body: 'Markets, launches, openings and pop-ups covered live, with a cut turned around while the event is still fresh.' },
+  { title: 'Short-form editing', body: 'Send me your own footage and I\'ll send back a finished reel — branded overlays, trending audio, captions, a custom cover, formatted for each platform.' },
 ];
 
 export const FAQS = [
-  { q: 'What exactly do I get?', a: 'Depends on the track. A UGC package means I create the content and post it to @stgeorgemama, where it reaches my audience. A Content Day means I film for your business and hand the footage to you — you own it and post it wherever you like. Plenty of brands do both.' },
-  { q: 'Do I own the footage?', a: 'On a BTS Content Day and Content Creation, yes — raw footage is delivered to you within 24–48 hours and it\'s yours to edit and share on your own terms. UGC packages include a public affiliate link published for a set window; ask me about extended usage rights if you need the content for paid ads.' },
-  { q: 'How fast is turnaround?', a: 'Content Day footage lands within 24–48 hours. Edited UGC packages are 5–7 days for Basic and 7–10 days for Standard and Luxe. Need it sooner? Rush editing gets it to you in 24 hours for $100.' },
-  { q: 'How many revisions?', a: 'Standard and Luxe include one revision per video, and Content Creation includes one round. Basic doesn\'t include revisions — if you want room to iterate, start at Standard.' },
-  { q: 'Do you only work with family brands?', a: 'It\'s where I\'m strongest — 85.8% of my audience are women, mostly 25–34, and they are the ones making the buying decisions for their households. But I\'ve shot restaurants, home builders, med-spas, markets and solar. If your customer is a parent in Southern Utah, we\'ll work well together.' },
-  { q: 'Do you travel outside St. George?', a: 'Yes, across Southern Utah. 40.4% of my audience is right here in St. George, so local work carries the most weight — but reach out and we\'ll talk about it.' },
-  { q: 'My budget doesn\'t fit your packages.', a: 'Tell me anyway. The packages are a starting point, not a wall, and I put together custom collaborations regularly. The worst outcome is I say it isn\'t a fit.' },
+  { q: 'What exactly do I get?', a: 'It depends which track suits you. A UGC package means I create the content and share it on @stgeorgemama, where it reaches my audience. A Content Day means I film for your business and hand the footage over to you — it\'s yours to post wherever you like. Plenty of businesses do a little of both.' },
+  { q: 'Do I own the footage?', a: 'On a BTS Content Day and Content Creation, yes — raw footage is delivered within 24–48 hours and it\'s yours to edit and share on your own terms. UGC packages include a public affiliate link published for a set window. If you\'d like to use the content for paid ads, just ask and we\'ll sort out extended usage rights.' },
+  { q: 'How fast is turnaround?', a: 'Content Day footage lands within 24–48 hours. Edited UGC packages are 5–7 days for Basic, and 7–10 days for Standard and Luxe. If you need it sooner, rush editing gets it to you in 24 hours for $100.' },
+  { q: 'How many revisions are included?', a: 'Standard and Luxe include one revision per video, and Content Creation includes one round. Basic doesn\'t include revisions, so if you\'d like room to fine-tune, Standard is a comfortable place to start.' },
+  { q: 'What kinds of businesses do you work with?', a: 'All sorts — restaurants, home builders, markets, tourism, beauty and wellness, retail, home services and family brands. My audience skews toward women aged 25–34, who tend to make the buying decisions for their households, and that turns out to be a natural fit for a lot of local businesses. If you\'re in Southern Utah, there\'s a good chance we\'d work well together.' },
+  { q: 'Do you travel outside St. George?', a: 'Yes, all across Southern Utah. A good share of my audience is right here in St. George, so local work carries a little extra weight — but I\'d love to hear what you have in mind either way.' },
+  { q: 'What if my budget doesn\'t fit the packages?', a: 'Just ask. The packages are a starting point rather than a rule, and I put together custom collaborations all the time. I\'d much rather hear what you have in mind than have you count yourself out.' },
 ];
 
 export const PROCESS = [
-  { step: 'Tell me about it', body: 'You send over what you\'re launching, who you need to reach, and roughly what you want to spend. No pitch deck required.' },
-  { step: 'I build the concept', body: 'I come back with the idea — hook, shot list, sound, and how it\'ll land with parents. You approve before anything gets filmed.' },
-  { step: 'Filming day', body: 'I show up with the camera and the drone and shoot on location. It\'s quick, low-fuss, and your team can carry on working around it.' },
-  { step: 'You get the cut', body: 'Edited, captioned, cover image set, formatted for each platform. Revisions where your package includes them, then it goes live.' },
+  { step: 'Tell me about it', body: 'Send over what you\'re working on, who you\'d like to reach, and roughly what you have in mind. No pitch deck required.' },
+  { step: 'We shape the idea', body: 'I\'ll come back with a concept — the hook, the shot list, the sound, and how it\'ll land with your audience. Nothing gets filmed until you\'re happy with it.' },
+  { step: 'Filming day', body: 'I show up with the camera and the drone and shoot on location. It\'s quick and low-key, and your team can carry on working around me.' },
+  { step: 'You get the cut', body: 'Edited, captioned, cover image set, and formatted for each platform. Revisions where your package includes them, and then it\'s ready to share.' },
 ];

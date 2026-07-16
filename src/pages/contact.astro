@@ -4,15 +4,16 @@ import { SITE, FORM } from '../data/site.mjs';
 ---
 <Base
   title="Contact"
-  description="Tell Autumn Flowers what you're launching. UGC and content creation for brands in St. George and Southern Utah."
+  description="Get in touch with Autumn Flowers — UGC and content creation for businesses in St. George and Southern Utah."
 >
   <section class="page-head">
     <div class="wrap">
       <p class="eyebrow">Contact</p>
       <h1>Let&rsquo;s <em>team up</em>.</h1>
       <p class="lede">
-        Tell me what you&rsquo;re launching, who you need to reach, and roughly what you
-        want to spend. No pitch deck required &mdash; I read every one of these myself.
+        Tell me a little about your business and what you&rsquo;d like to create. No pitch
+        deck required &mdash; I read every one of these myself, and I&rsquo;d love to hear
+        what you have in mind.
       </p>
     </div>
   </section>
@@ -22,7 +23,7 @@ import { SITE, FORM } from '../data/site.mjs';
       <div class="contact__form">
         <form data-form novalidate>
           <input type="hidden" name="access_key" value={FORM.accessKey} />
-          <input type="hidden" name="subject" value="New enquiry from autumnflowerssocials.com" />
+          <input type="hidden" name="subject" value="New inquiry from autumnflowerssocials.com" />
           <input type="hidden" name="from_name" value="Autumn Flowers Socials" />
           <!-- Honeypot: bots fill it, humans never see it. -->
           <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" />
@@ -51,9 +52,9 @@ import { SITE, FORM } from '../data/site.mjs';
 
           <div class="row">
             <div class="field">
-              <label for="package">What are you after?</label>
+              <label for="package">What are you interested in?</label>
               <select id="package" name="package" data-package>
-                <option value="">Not sure yet — help me pick</option>
+                <option value="">Not sure yet — happy to help you choose</option>
                 <option value="basic">UGC — Basic ($125)</option>
                 <option value="standard">UGC — Standard ($300)</option>
                 <option value="luxe">UGC — Luxe ($550)</option>
@@ -72,10 +73,10 @@ import { SITE, FORM } from '../data/site.mjs';
           <div class="field">
             <label for="message">Tell me about it</label>
             <textarea id="message" name="message" rows="6" required
-              placeholder="What are you launching, and who are you trying to reach?"></textarea>
+              placeholder="What are you working on, and who would you like to reach?"></textarea>
           </div>
 
-          <button type="submit" class="btn btn--solid" data-submit>Send enquiry</button>
+          <button type="submit" class="btn btn--solid" data-submit>Send inquiry</button>
           <p class="status" data-status role="status" aria-live="polite"></p>
         </form>
       </div>
@@ -209,7 +210,7 @@ import { SITE, FORM } from '../data/site.mjs';
       if (!res.ok || !data.success) throw new Error(data.message || 'Send failed');
       form.reset();
       status.dataset.tone = 'ok';
-      status.textContent = 'Got it — thank you! I read every enquiry myself and usually reply within a day or two.';
+      status.textContent = 'Got it — thank you! I read every inquiry myself and usually reply within a day or two.';
     } catch (err) {
       status.dataset.tone = 'bad';
       status.textContent = 'That didn\'t send. Please email Autumnflowersugc@gmail.com and I\'ll pick it up there.';

@@ -26,7 +26,11 @@ jobs:
         with:
           node-version: 22
           cache: npm
-      - run: npm ci
+      # `npm install`, not `npm ci`. Astro pulls sharp, whose wasm variant declares
+      # platform-specific optional deps (@emnapi/*) that npm records for the authoring
+      # machine only — a lockfile generated on macOS makes `npm ci` fail on ubuntu with
+      # "Missing: @emnapi/runtime from lock file". install resolves per-runner instead.
+      - run: npm install --no-audit --no-fund
       - run: npx astro build
         env:
           # Publishable Web3Forms key. Set as a repository *variable* (Settings →

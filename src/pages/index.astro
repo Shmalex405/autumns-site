@@ -1,0 +1,244 @@
+---
+import Base from '../layouts/Base.astro';
+import Reels from '../components/Reels.astro';
+import { SITE, STATS, BRANDS, TESTIMONIALS, EXPECTATIONS } from '../data/site.mjs';
+import portfolio from '../data/portfolio.json';
+
+const featured = ['sandtown-pizza', 'lemon-lab', 'chained-and-charmed', 'toydash',
+  'red-rock-aerial', 'summit-view-cedar-pointe', 'hawaii-fluid-art', 'the-mod-market']
+  .map(s => portfolio.items.find(i => i.slug === s)).filter(Boolean);
+---
+<Base
+  title="UGC & Content Creation in St. George, Utah"
+  description="Autumn Flowers (@stgeorgemama) makes authentic, scroll-stopping video for brands in St. George and Southern Utah. UGC, product showcases, lifestyle content and FPV drone."
+>
+  <section class="hero">
+    <video class="hero__v" autoplay muted loop playsinline preload="metadata"
+      poster="/media/hero.jpg" aria-hidden="true" tabindex="-1">
+      <source src="/media/hero.mp4" type="video/mp4" />
+    </video>
+    <div class="hero__scrim"></div>
+    <div class="wrap hero__in">
+      <div class="hero__col">
+        <p class="hero__eyebrow">UGC creator &amp; videographer &middot; {SITE.location}</p>
+        <h1>Content that stops <em>the scroll</em> — and sells.</h1>
+        <p class="hero__lede">
+          I&rsquo;m Autumn. I help Southern Utah brands make authentic video that connects
+          with the people actually buying: parents, and mostly mums.
+        </p>
+        <div class="btn-row">
+          <a href="/contact/" class="btn btn--solid">Work with me</a>
+          <a href="/portfolio/" class="btn btn--light">See the work</a>
+        </div>
+      </div>
+    </div>
+    <a href="#proof" class="hero__down" aria-label="Skip to the numbers"><span></span></a>
+  </section>
+
+  <!-- Reach leads, not follower count: 11.5K weekly reach on 1.7K followers is the
+       genuinely strong number, and 40.4% local is what a St. George business buys. -->
+  <section class="section" id="proof">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">The numbers</p>
+        <h2>Small following.<br /><em>Loud</em> in St. George.</h2>
+        <p class="lede">
+          A follower count is vanity. What matters to your business is how many local
+          people see the thing, and whether they&rsquo;re the ones who buy. Mine are.
+        </p>
+      </div>
+      <div class="stats">
+        {STATS.map(s => (
+          <div class="stat">
+            <p class="stat__v">{s.value}</p>
+            <p class="stat__l">{s.label}</p>
+            <p class="stat__n">{s.note}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--cream">
+    <div class="wrap">
+      <div class="split">
+        <div class="split__media">
+          <img src="/img/autumn-standing.jpg" alt="Autumn Flowers against a red rock wall in St. George"
+            width="800" height="1200" loading="lazy" />
+        </div>
+        <div class="split__body">
+          <p class="eyebrow">About me</p>
+          <h2>Mom of three.<br />Camera always<br /><em>in the bag.</em></h2>
+          <p>
+            I&rsquo;m a content creator, storyteller and mom of three little ones &mdash;
+            including twin boys &mdash; living in sunny St. George, Utah.
+          </p>
+          <p>
+            I share family-friendly businesses, products and experiences that make life
+            easier, more fun and more memorable for parents. Whether we&rsquo;re exploring
+            local adventures, testing products, or sharing everyday moments, my goal is
+            content that feels relatable and trustworthy.
+          </p>
+          <p>
+            As a busy mom of 3 under 3, I&rsquo;m always looking for brands that genuinely
+            simplify family life &mdash; and I love turning those discoveries into video
+            that helps businesses connect with parents in a natural, meaningful way.
+          </p>
+          <div class="btn-row" style="margin-top:1.8rem">
+            <a href="/about/" class="btn btn--ghost">More about me</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Featured work</p>
+        <h2>Recent <em>collaborations</em></h2>
+        <p class="lede">
+          Restaurants, markets, home builders, family brands and a fair amount of red rock.
+          Tap any of them to watch.
+        </p>
+      </div>
+      <Reels items={featured} />
+      <div class="btn-row" style="margin-top:2.6rem">
+        <a href="/portfolio/" class="btn btn--ghost">All {portfolio.items.length} pieces</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--cream">
+    <div class="wrap">
+      <p class="eyebrow" style="text-align:center">Brands I&rsquo;ve worked with</p>
+      <ul class="brands">
+        {BRANDS.map(b => <li>{b}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">What brands are saying</p>
+        <h2>Straight from<br />the <em>DMs</em>.</h2>
+      </div>
+      <div class="quotes">
+        {TESTIMONIALS.map(t => (
+          <figure class="quote">
+            <blockquote><p>{t.quote}</p></blockquote>
+            <figcaption><span class="quote__b">{t.brand}</span><span class="quote__r">{t.role}</span></figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--sage">
+    <div class="wrap">
+      <div class="expect">
+        <div>
+          <p class="eyebrow">What to expect</p>
+          <h2>Working with me<br />is <em style="color:var(--cream)">easy</em>.</h2>
+          <p class="lede">
+            You&rsquo;re getting authentic, family-focused content created by a real mom
+            who knows what resonates with parents.
+          </p>
+        </div>
+        <ul class="expect__list">
+          {EXPECTATIONS.map(e => <li>{e}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta">
+    <div class="wrap wrap--narrow" style="text-align:center">
+      <h2>Let&rsquo;s <em>team up</em>.</h2>
+      <p class="lede" style="margin:1.2rem auto 2rem">
+        Tell me what you&rsquo;re launching and roughly what you want to spend.
+        No pitch deck required.
+      </p>
+      <div class="btn-row" style="justify-content:center">
+        <a href="/contact/" class="btn btn--rock">Start a project</a>
+        <a href="/media-kit.pdf" class="btn btn--ghost" download>Download media kit</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero { position: relative; min-height: min(88vh, 780px); display: flex;
+    align-items: flex-end; overflow: hidden; background: var(--ink); }
+  /* The montage is 1.69:1. object-fit:cover means desktop sees all three columns and
+     a portrait phone crops to the centre one — Autumn — from the same single file. */
+  .hero__v { position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; object-position: center; }
+  /* Two gradients doing different jobs. The horizontal one darkens the left column —
+     the drone shot of bare sandstone, which is low-detail and makes the only quiet
+     bed for type in the whole montage. The vertical one carries the phone crop, where
+     the centre column (Autumn) fills the frame and text sits along the bottom. */
+  .hero__scrim { position: absolute; inset: 0;
+    background:
+      linear-gradient(to right, rgba(20,16,9,.9) 0%, rgba(20,16,9,.72) 30%,
+        rgba(20,16,9,.24) 54%, rgba(20,16,9,.1) 70%, rgba(20,16,9,.34) 100%),
+      linear-gradient(to top, rgba(20,16,9,.72) 0%, rgba(20,16,9,.12) 48%, rgba(20,16,9,.2) 100%); }
+  /* width:100% is load-bearing: .wrap sets `margin-inline:auto`, and as a flex item
+     inside .hero it would otherwise shrink-to-fit and centre itself — parking the
+     headline on top of the centre column (Autumn) instead of the quiet left one. */
+  .hero__in { position: relative; width: 100%; padding-block: clamp(3.5rem, 8vw, 6rem); color: #fff; }
+  .hero__col { max-width: 33rem; }
+  .hero__eyebrow { font-size: .68rem; font-weight: 500; letter-spacing: .24em;
+    text-transform: uppercase; color: rgba(255,255,255,.8); margin: 0 0 1.4rem;
+    text-shadow: 0 1px 12px rgba(0,0,0,.5); }
+  .hero h1 { color: #fff; text-shadow: 0 2px 30px rgba(0,0,0,.45);
+    font-size: clamp(2.7rem, 5.6vw, 4.4rem); }
+  .hero h1 em { color: var(--cream); font-style: italic; }
+  .hero__lede { color: rgba(255,255,255,.9); font-size: clamp(1.05rem, 1.6vw, 1.24rem);
+    max-width: 34ch; margin: 1.5rem 0 2.2rem; text-shadow: 0 1px 16px rgba(0,0,0,.5); }
+  /* Below the desktop breakpoint the montage crops to the centre column, so type
+     moves off the (now absent) left column and onto the bottom scrim. */
+  @media (max-width: 900px) { .hero__col { max-width: 34rem; } }
+  .hero__down { position: absolute; bottom: 1.4rem; left: 50%; transform: translateX(-50%);
+    width: 26px; height: 42px; border: 1px solid rgba(255,255,255,.4); border-radius: 999px; }
+  .hero__down span { position: absolute; top: 8px; left: 50%; width: 3px; height: 6px;
+    margin-left: -1.5px; border-radius: 2px; background: #fff; animation: dip 1.9s infinite; }
+  @keyframes dip { 0%,100% { transform: translateY(0); opacity: 0 } 40% { opacity: 1 } 70% { transform: translateY(15px); opacity: 0 } }
+  @media (max-width: 600px) { .hero__down { display: none; } }
+
+  .split { display: grid; grid-template-columns: 1fr 1.15fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+  .split__media img { width: 100%; aspect-ratio: 2/3; object-fit: cover; border-radius: var(--radius); }
+  .split__body p:not(.eyebrow) { color: var(--muted); }
+  .split__body h2 { margin-bottom: 1.4rem; }
+  @media (max-width: 800px) { .split { grid-template-columns: 1fr; } }
+
+  .brands { list-style: none; margin: 2.5rem 0 0; padding: 0; display: flex;
+    flex-wrap: wrap; justify-content: center; gap: .6rem 0; }
+  .brands li { font-family: var(--display); font-size: clamp(1.15rem, 2.2vw, 1.7rem);
+    color: var(--brown); padding: 0 1.4rem; position: relative; line-height: 1.5; }
+  .brands li:not(:last-child)::after { content: '·'; position: absolute; right: -.2rem;
+    color: var(--sage); }
+
+  .quotes { columns: 3 260px; column-gap: 1.4rem; }
+  .quote { break-inside: avoid; margin: 0 0 1.4rem; background: var(--cream);
+    border-radius: var(--radius); padding: 1.7rem; border-left: 2px solid var(--sage); }
+  .quote blockquote { margin: 0; }
+  .quote blockquote p { font-size: .97rem; line-height: 1.6; color: var(--ink); }
+  .quote figcaption { margin-top: 1.1rem; display: flex; flex-direction: column; }
+  .quote__b { font-size: .78rem; font-weight: 600; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--sage-deep); }
+  .quote__r { font-size: .78rem; color: var(--muted); }
+
+  .expect { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+  .expect h2 { color: #fff; }
+  .expect__list { list-style: none; margin: 0; padding: 0; }
+  .expect__list li { padding: 1.1rem 0 1.1rem 2rem; border-bottom: 1px solid rgba(255,255,255,.22);
+    position: relative; color: #fff; font-size: 1.02rem; }
+  .expect__list li::before { content: ''; position: absolute; left: 0; top: 1.55rem;
+    width: 10px; height: 10px; border-radius: 50%; background: var(--cream); }
+  .expect__list li:last-child { border-bottom: 0; }
+  @media (max-width: 800px) { .expect { grid-template-columns: 1fr; } }
+
+  .cta { background: var(--cream); }
+</style>

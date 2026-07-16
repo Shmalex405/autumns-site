@@ -1,0 +1,221 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE, FORM } from '../data/site.mjs';
+---
+<Base
+  title="Contact"
+  description="Tell Autumn Flowers what you're launching. UGC and content creation for brands in St. George and Southern Utah."
+>
+  <section class="page-head">
+    <div class="wrap">
+      <p class="eyebrow">Contact</p>
+      <h1>Let&rsquo;s <em>team up</em>.</h1>
+      <p class="lede">
+        Tell me what you&rsquo;re launching, who you need to reach, and roughly what you
+        want to spend. No pitch deck required &mdash; I read every one of these myself.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap contact">
+      <div class="contact__form">
+        <form data-form novalidate>
+          <input type="hidden" name="access_key" value={FORM.accessKey} />
+          <input type="hidden" name="subject" value="New enquiry from autumnflowerssocials.com" />
+          <input type="hidden" name="from_name" value="Autumn Flowers Socials" />
+          <!-- Honeypot: bots fill it, humans never see it. -->
+          <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" />
+
+          <div class="row">
+            <div class="field">
+              <label for="name">Your name</label>
+              <input id="name" name="name" type="text" required autocomplete="name" />
+            </div>
+            <div class="field">
+              <label for="business">Business</label>
+              <input id="business" name="business" type="text" autocomplete="organization" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" required autocomplete="email" />
+            </div>
+            <div class="field">
+              <label for="phone">Phone <span>optional</span></label>
+              <input id="phone" name="phone" type="tel" autocomplete="tel" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field">
+              <label for="package">What are you after?</label>
+              <select id="package" name="package" data-package>
+                <option value="">Not sure yet — help me pick</option>
+                <option value="basic">UGC — Basic ($125)</option>
+                <option value="standard">UGC — Standard ($300)</option>
+                <option value="luxe">UGC — Luxe ($550)</option>
+                <option value="bts">BTS Content Day ($250/hr)</option>
+                <option value="editing">Content Creation — you send footage ($150/video)</option>
+                <option value="drone">FPV Drone ($400/hr)</option>
+                <option value="custom">Something custom</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="timing">Timing <span>optional</span></label>
+              <input id="timing" name="timing" type="text" placeholder="e.g. before the May opening" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="message">Tell me about it</label>
+            <textarea id="message" name="message" rows="6" required
+              placeholder="What are you launching, and who are you trying to reach?"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn--solid" data-submit>Send enquiry</button>
+          <p class="status" data-status role="status" aria-live="polite"></p>
+        </form>
+      </div>
+
+      <aside class="contact__side">
+        <img src="/img/autumn-headshot.jpg" alt="Autumn Flowers" width="700" height="700" class="side__img" loading="lazy" />
+        <div class="side__block">
+          <h2>Or just reach out</h2>
+          <a href={`mailto:${SITE.email}`} class="side__link">{SITE.email}</a>
+          <a href={`tel:${SITE.phoneHref}`} class="side__link">{SITE.phone}</a>
+          <a href={SITE.handleUrl} class="side__link" rel="noopener" target="_blank">{SITE.handleLabel}</a>
+        </div>
+        <div class="side__block">
+          <h2>Media kit</h2>
+          <p>Audience breakdown, packages and rates in one PDF.</p>
+          <a href="/media-kit.pdf" class="btn btn--ghost side__btn" download>Download (PDF)</a>
+        </div>
+        <div class="side__block side__block--sage">
+          <p><strong>Based in {SITE.location}</strong>, shooting across Southern Utah.
+          40.4% of my audience is right here in St. George.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .page-head { padding-block: clamp(3rem, 7vw, 5.5rem) clamp(2rem, 4vw, 3rem); }
+  .page-head h1 { margin-bottom: 1.3rem; }
+  .page-head .lede { max-width: 52ch; }
+
+  .contact { display: grid; grid-template-columns: 1.5fr .85fr; gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+  @media (max-width: 880px) { .contact { grid-template-columns: 1fr; } }
+
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+  @media (max-width: 560px) { .row { grid-template-columns: 1fr; } }
+  .field { display: flex; flex-direction: column; margin-bottom: 1.1rem; }
+  .field label { font-size: .72rem; font-weight: 600; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--brown); margin-bottom: .5rem; }
+  .field label span { font-weight: 400; letter-spacing: .06em; color: var(--muted);
+    text-transform: none; font-size: .74rem; }
+  .field input, .field select, .field textarea {
+    font-family: var(--sans); font-size: 1rem; color: var(--ink);
+    background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: .85rem 1rem; width: 100%; transition: border-color .18s ease;
+  }
+  .field textarea { resize: vertical; min-height: 130px; }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    border-color: var(--sage); outline: 2px solid transparent; outline-offset: 0;
+    box-shadow: 0 0 0 3px var(--sage-wash);
+  }
+  .field [aria-invalid='true'] { border-color: var(--rock); }
+  .field .err { color: var(--rock); font-size: .8rem; margin: .4rem 0 0; }
+  .hp { position: absolute; left: -9999px; opacity: 0; }
+
+  .status { margin: 1rem 0 0; font-size: .93rem; }
+  .status[data-tone='ok'] { color: var(--sage-deep); }
+  .status[data-tone='bad'] { color: var(--rock); }
+
+  .side__img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: var(--radius);
+    margin-bottom: 1.6rem; }
+  .side__block { padding-bottom: 1.5rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--line); }
+  .side__block:last-child { border-bottom: 0; }
+  .side__block h2 { font-family: var(--sans); font-size: .68rem; font-weight: 600;
+    letter-spacing: .22em; text-transform: uppercase; color: var(--sage-deep); margin-bottom: .9rem; }
+  .side__block p { color: var(--muted); font-size: .93rem; }
+  .side__link { display: block; color: var(--ink); text-decoration: none; padding: .3rem 0; font-size: .97rem; }
+  .side__link:hover { color: var(--sage-deep); text-decoration: underline; text-underline-offset: 3px; }
+  .side__btn { margin-top: .3rem; }
+  .side__block--sage { background: var(--sage-wash); border: 0; border-radius: var(--radius); padding: 1.3rem; }
+  .side__block--sage p { margin: 0; color: var(--brown); font-size: .9rem; }
+  .side__block--sage strong { color: var(--ink); }
+</style>
+
+<script>
+  const form = document.querySelector('[data-form]') as HTMLFormElement | null;
+  const status = document.querySelector('[data-status]') as HTMLElement | null;
+  const submit = document.querySelector('[data-submit]') as HTMLButtonElement | null;
+
+  // Deep-link from the pricing page: /contact/?package=standard preselects the tier.
+  const pkg = new URLSearchParams(location.search).get('package');
+  const sel = document.querySelector('[data-package]') as HTMLSelectElement | null;
+  if (pkg && sel && [...sel.options].some(o => o.value === pkg)) sel.value = pkg;
+
+  const setErr = (el: HTMLElement, msg: string | null) => {
+    el.setAttribute('aria-invalid', msg ? 'true' : 'false');
+    const existing = el.parentElement?.querySelector('.err');
+    existing?.remove();
+    if (msg) {
+      const p = document.createElement('p');
+      p.className = 'err'; p.textContent = msg;
+      el.parentElement?.appendChild(p);
+    }
+  };
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!status || !submit) return;
+
+    // Validate before spending a request.
+    let ok = true;
+    for (const id of ['name', 'email', 'message']) {
+      const el = document.getElementById(id) as HTMLInputElement;
+      const empty = !el.value.trim();
+      const badEmail = id === 'email' && el.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value);
+      const msg = empty ? 'This one\'s needed.' : badEmail ? 'That email doesn\'t look right.' : null;
+      setErr(el, msg);
+      if (msg && ok) { el.focus(); ok = false; }
+    }
+    if (!ok) { status.textContent = ''; return; }
+
+    const key = (form.querySelector('[name=access_key]') as HTMLInputElement)?.value;
+    if (!key || key.startsWith('REPLACE_ME')) {
+      status.dataset.tone = 'bad';
+      status.textContent = `The form isn't connected yet. Please email ${'Autumnflowersugc@gmail.com'} directly — sorry about that.`;
+      return;
+    }
+
+    submit.disabled = true;
+    const original = submit.textContent;
+    submit.textContent = 'Sending…';
+    status.dataset.tone = ''; status.textContent = '';
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(Object.fromEntries(new FormData(form))),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.success) throw new Error(data.message || 'Send failed');
+      form.reset();
+      status.dataset.tone = 'ok';
+      status.textContent = 'Got it — thank you! I read every enquiry myself and usually reply within a day or two.';
+    } catch (err) {
+      status.dataset.tone = 'bad';
+      status.textContent = 'That didn\'t send. Please email Autumnflowersugc@gmail.com and I\'ll pick it up there.';
+    } finally {
+      submit.disabled = false;
+      submit.textContent = original;
+    }
+  });
+</script>

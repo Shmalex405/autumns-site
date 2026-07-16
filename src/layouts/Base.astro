@@ -1,0 +1,172 @@
+---
+import '../styles/global.css';
+import { SITE } from '../data/site.mjs';
+
+const { title, description, ogImage = '/media/hero.jpg' } = Astro.props;
+const full = title ? `${title} — ${SITE.name}` : `${SITE.name} — UGC & Content Creation in St. George, Utah`;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+
+const NAV = [
+  { href: '/portfolio/', label: 'Portfolio' },
+  { href: '/services/', label: 'Services' },
+  { href: '/pricing/', label: 'Pricing' },
+  { href: '/about/', label: 'About' },
+];
+const path = Astro.url.pathname;
+
+// Schema.org — helps a local brand searching "UGC creator St George" actually find her.
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: `${SITE.name} Socials`,
+  description: 'UGC and content creation for brands in St. George and Southern Utah.',
+  url: `https://${SITE.domain}`,
+  email: SITE.email,
+  telephone: SITE.phoneHref,
+  areaServed: 'St. George, Utah',
+  address: { '@type': 'PostalAddress', addressLocality: 'St. George', addressRegion: 'UT', addressCountry: 'US' },
+  sameAs: [SITE.handleUrl],
+};
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{full}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  <meta property="og:title" content={full} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={new URL(ogImage, Astro.site).href} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#74A459" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preload" href="/fonts/co3bmX5slCNuHLi8bLeY9MK7whWMhyjYqXtKky2F7g.woff2" as="font" type="font/woff2" crossorigin />
+  <set:html value={`<script type="application/ld+json">${JSON.stringify(schema)}</script>`} />
+</head>
+<body>
+  <a href="#main" class="skip">Skip to content</a>
+
+  <header class="nav" data-nav>
+    <div class="nav__in">
+      <a href="/" class="nav__logo" aria-label={`${SITE.name} — home`}>
+        <span>Autumn</span> Flowers
+      </a>
+      <nav class="nav__links" aria-label="Main">
+        {NAV.map(l => (
+          <a href={l.href} aria-current={path.startsWith(l.href) ? 'page' : undefined}>{l.label}</a>
+        ))}
+      </nav>
+      <a href="/contact/" class="btn btn--solid nav__cta">Work with me</a>
+      <button class="nav__burger" data-burger aria-expanded="false" aria-controls="m-nav">
+        <span class="sr-only">Menu</span><span aria-hidden="true"></span>
+      </button>
+    </div>
+    <nav class="nav__mobile" id="m-nav" data-mobile aria-label="Main" hidden>
+      {NAV.map(l => <a href={l.href}>{l.label}</a>)}
+      <a href="/contact/">Work with me</a>
+    </nav>
+  </header>
+
+  <main id="main"><slot /></main>
+
+  <footer class="foot">
+    <div class="wrap foot__in">
+      <div class="foot__brand">
+        <p class="foot__logo"><span>Autumn</span> Flowers</p>
+        <p class="foot__tag">{SITE.tagline}<br />{SITE.location}</p>
+      </div>
+      <div class="foot__col">
+        <h2>Site</h2>
+        {NAV.map(l => <a href={l.href}>{l.label}</a>)}
+        <a href="/contact/">Contact</a>
+      </div>
+      <div class="foot__col">
+        <h2>Get in touch</h2>
+        <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+        <a href={`tel:${SITE.phoneHref}`}>{SITE.phone}</a>
+        <a href={SITE.handleUrl} rel="me noopener" target="_blank">{SITE.handleLabel}</a>
+        <a href="/media-kit.pdf" download>Download media kit (PDF)</a>
+      </div>
+    </div>
+    <div class="wrap foot__base">
+      <p>© {new Date().getFullYear()} {SITE.name} Socials. All content shot and edited in Southern Utah.</p>
+    </div>
+  </footer>
+
+  <style>
+    .skip {
+      position: absolute; left: -9999px; top: 0; z-index: 100;
+      background: var(--ink); color: var(--paper); padding: .8rem 1.2rem;
+    }
+    .skip:focus { left: .5rem; top: .5rem; }
+
+    .nav { position: sticky; top: 0; z-index: 50; background: rgba(251,251,244,.88);
+      backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+    .nav__in { max-width: var(--max); margin-inline: auto; padding: 0 var(--pad);
+      height: 74px; display: flex; align-items: center; gap: 2rem; }
+    .nav__logo { font-family: var(--display); font-size: 1.5rem; font-weight: 400;
+      color: var(--ink); text-decoration: none; letter-spacing: -.01em; margin-right: auto; }
+    .nav__logo span { font-style: italic; color: var(--sage-deep); }
+    .nav__links { display: flex; gap: 2rem; }
+    .nav__links a { font-size: .8rem; font-weight: 500; letter-spacing: .13em;
+      text-transform: uppercase; color: var(--muted); text-decoration: none;
+      padding: .3rem 0; border-bottom: 1px solid transparent; }
+    .nav__links a:hover { color: var(--ink); }
+    .nav__links a[aria-current='page'] { color: var(--ink); border-bottom-color: var(--sage); }
+    .nav__cta { padding: .75rem 1.5rem; font-size: .72rem; }
+    .nav__burger { display: none; width: 44px; height: 44px; border: 0; background: none;
+      cursor: pointer; position: relative; }
+    .nav__burger span[aria-hidden] { position: absolute; inset: 0; }
+    .nav__burger span[aria-hidden]::before, .nav__burger span[aria-hidden]::after {
+      content: ''; position: absolute; left: 10px; right: 10px; height: 1.5px;
+      background: var(--ink); transition: transform .25s ease, top .25s ease; }
+    .nav__burger span[aria-hidden]::before { top: 16px; }
+    .nav__burger span[aria-hidden]::after { top: 26px; }
+    .nav__burger[aria-expanded='true'] span[aria-hidden]::before { top: 21px; transform: rotate(45deg); }
+    .nav__burger[aria-expanded='true'] span[aria-hidden]::after { top: 21px; transform: rotate(-45deg); }
+    .nav__mobile { display: none; flex-direction: column; padding: .5rem var(--pad) 1.5rem;
+      border-top: 1px solid var(--line); background: var(--paper); }
+    .nav__mobile a { padding: .95rem 0; font-size: .9rem; font-weight: 500; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--ink); text-decoration: none;
+      border-bottom: 1px solid var(--line); }
+    .nav__mobile a:last-child { color: var(--sage-deep); border: 0; }
+    @media (max-width: 860px) {
+      .nav__links, .nav__cta { display: none; }
+      .nav__burger { display: block; }
+      .nav__mobile[data-open] { display: flex; }
+    }
+
+    .foot { background: var(--ink); color: var(--cream); margin-top: 0; }
+    .foot__in { display: grid; gap: 2.5rem; padding-block: clamp(3rem, 6vw, 5rem);
+      grid-template-columns: 1.6fr 1fr 1.4fr; }
+    .foot__logo { font-family: var(--display); font-size: 1.9rem; margin: 0 0 .6rem; }
+    .foot__logo span { font-style: italic; color: var(--sage); }
+    .foot__tag { font-size: .82rem; letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(243,244,231,.5); line-height: 1.9; margin: 0; }
+    .foot__col { display: flex; flex-direction: column; gap: .7rem; }
+    .foot__col h2 { font-family: var(--sans); font-size: .68rem; font-weight: 600;
+      letter-spacing: .22em; text-transform: uppercase; color: var(--sage);
+      margin: 0 0 .4rem; }
+    .foot__col a { color: rgba(243,244,231,.78); text-decoration: none; font-size: .93rem; }
+    .foot__col a:hover { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+    .foot__base { border-top: 1px solid rgba(243,244,231,.13); padding-block: 1.6rem; }
+    .foot__base p { margin: 0; font-size: .78rem; color: rgba(243,244,231,.4); }
+    @media (max-width: 720px) { .foot__in { grid-template-columns: 1fr; gap: 2rem; } }
+  </style>
+
+  <script>
+    const burger = document.querySelector('[data-burger]');
+    const menu = document.querySelector('[data-mobile]');
+    burger?.addEventListener('click', () => {
+      const open = burger.getAttribute('aria-expanded') === 'true';
+      burger.setAttribute('aria-expanded', String(!open));
+      if (open) { menu.removeAttribute('data-open'); menu.hidden = true; }
+      else { menu.hidden = false; menu.setAttribute('data-open', ''); }
+    });
+  </script>
+</body>
+</html>

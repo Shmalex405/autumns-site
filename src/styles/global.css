@@ -1,0 +1,197 @@
+@import '/fonts/fonts.css';
+
+/* Palette sampled directly from Autumn's 2026 media kit and branding shoot:
+   sage #74A459, red rock #9C5935, cream #F3F4E7, brown #57432E.
+   Deliberately single-theme — the brand is bright and sunlit, and a dark
+   inversion would fight both the photography and the "sunshine is the cure
+   for everything" line she leads her media kit with. */
+:root {
+  --paper: #FBFBF4;
+  --cream: #F3F4E7;
+  --cream-deep: #E9EBD9;
+  --sage: #74A459;
+  --sage-deep: #4A7135;
+  --sage-wash: #EDF2E5;
+  --rock: #9C5935;
+  --rock-deep: #7C4527;
+  --brown: #57432E;
+  --ink: #241F14;
+  --muted: #797260;
+  --line: #E3E2CF;
+
+  --display: 'Cormorant Garamond', 'Iowan Old Style', Palatino, Georgia, serif;
+  --sans: 'Jost', 'Avenir Next', -apple-system, 'Segoe UI', system-ui, sans-serif;
+
+  --pad: clamp(1.25rem, 5vw, 3rem);
+  --gap: clamp(3.5rem, 9vw, 8rem);
+  --max: 1220px;
+  --radius: 3px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important; animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img, video { max-width: 100%; display: block; }
+
+h1, h2, h3 {
+  font-family: var(--display);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+  margin: 0;
+}
+h1 { font-size: clamp(2.9rem, 7.5vw, 5.4rem); }
+h2 { font-size: clamp(2.1rem, 4.6vw, 3.4rem); }
+h3 { font-size: clamp(1.3rem, 2vw, 1.6rem); line-height: 1.2; }
+em { font-style: italic; color: var(--rock); }
+p { margin: 0 0 1.1em; }
+p:last-child { margin-bottom: 0; }
+
+a { color: var(--sage-deep); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { color: var(--rock); }
+
+:focus-visible {
+  outline: 2px solid var(--rock);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ---- layout ---- */
+.wrap { max-width: var(--max); margin-inline: auto; padding-inline: var(--pad); }
+.wrap--narrow { max-width: 760px; }
+.section { padding-block: var(--gap); }
+.section--cream { background: var(--cream); }
+.section--sage { background: var(--sage); color: #fff; }
+
+.eyebrow {
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--sage-deep); margin: 0 0 1.1rem;
+}
+.section--sage .eyebrow { color: rgba(255,255,255,.82); }
+.lede { font-size: clamp(1.05rem, 1.7vw, 1.3rem); color: var(--muted); max-width: 62ch; }
+.section--sage .lede { color: rgba(255,255,255,.9); }
+
+.head { max-width: 44ch; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+.head .lede { margin-top: 1.2rem; }
+
+/* ---- buttons ---- */
+.btn {
+  display: inline-flex; align-items: center; gap: .6rem;
+  font-family: var(--sans); font-size: .82rem; font-weight: 500;
+  letter-spacing: .13em; text-transform: uppercase;
+  padding: 1.05rem 2.1rem; border-radius: 999px; border: 1px solid transparent;
+  text-decoration: none; cursor: pointer;
+  transition: background .2s ease, color .2s ease, border-color .2s ease, transform .2s ease;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn--solid { background: var(--sage); color: #fff; }
+.btn--solid:hover { background: var(--sage-deep); color: #fff; }
+.btn--rock { background: var(--rock); color: #fff; }
+.btn--rock:hover { background: var(--rock-deep); color: #fff; }
+.btn--ghost { border-color: currentColor; color: var(--ink); background: transparent; }
+.btn--ghost:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.btn--onsage { background: #fff; color: var(--sage-deep); }
+.btn--onsage:hover { background: var(--cream); color: var(--sage-deep); }
+.btn--light { border: 1px solid rgba(255,255,255,.55); color: #fff; }
+.btn--light:hover { background: #fff; color: var(--sage-deep); }
+
+.btn-row { display: flex; flex-wrap: wrap; gap: .9rem; }
+
+/* ---- reel grid ---- */
+.reels {
+  display: grid; gap: clamp(1rem, 2vw, 1.6rem);
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+.reel {
+  margin: 0; position: relative; border-radius: var(--radius); overflow: hidden;
+  background: var(--cream-deep); border: 0; padding: 0; width: 100%;
+  aspect-ratio: 9 / 16; cursor: pointer; display: block; color: inherit;
+  font-family: inherit; text-align: left;
+}
+.reel img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .7s cubic-bezier(.2,.7,.3,1), filter .4s ease;
+}
+.reel:hover img, .reel:focus-visible img { transform: scale(1.045); }
+.reel__scrim {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  justify-content: flex-end; padding: 1rem;
+  background: linear-gradient(to top, rgba(20,16,9,.86) 0%, rgba(20,16,9,.34) 42%, rgba(20,16,9,0) 72%);
+}
+.reel__brand {
+  font-size: .6rem; letter-spacing: .17em; text-transform: uppercase;
+  color: #fff; opacity: .72; margin: 0 0 .3rem; font-weight: 500;
+}
+.reel__title {
+  font-family: var(--display); font-size: 1.28rem; font-weight: 400;
+  color: #fff; margin: 0; line-height: 1.14;
+}
+.reel__play {
+  position: absolute; top: .8rem; right: .8rem;
+  width: 2.1rem; height: 2.1rem; border-radius: 50%;
+  background: rgba(255,255,255,.9); color: var(--ink);
+  display: grid; place-items: center; font-size: .62rem; padding-left: 2px;
+  transition: background .2s ease, transform .2s ease;
+}
+.reel:hover .reel__play { background: #fff; transform: scale(1.08); }
+.reel__dur {
+  position: absolute; top: .8rem; left: .8rem; font-size: .62rem; font-weight: 500;
+  background: rgba(20,16,9,.6); color: #fff; padding: .18rem .45rem;
+  border-radius: 2px; font-variant-numeric: tabular-nums; letter-spacing: .04em;
+}
+
+/* ---- filters ---- */
+.filters { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 2.4rem; }
+.filter {
+  font-family: var(--sans); font-size: .74rem; font-weight: 500; letter-spacing: .1em;
+  text-transform: uppercase; padding: .6rem 1.15rem; border-radius: 999px;
+  border: 1px solid var(--line); background: transparent; color: var(--muted);
+  cursor: pointer; transition: all .18s ease;
+}
+.filter:hover { border-color: var(--sage); color: var(--sage-deep); }
+.filter[aria-pressed='true'] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+
+/* ---- stats ---- */
+.stats { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+.stat { background: var(--paper); padding: clamp(1.5rem, 3vw, 2.2rem); }
+.section--cream .stat { background: var(--cream); }
+/* Cormorant Garamond ships old-style figures by default, which render "11.5K" as
+   "ıı.5K" — lovely in prose, unreadable as a headline stat. Force lining figures
+   anywhere a number has to be read rather than read *about*. */
+.stat__v {
+  font-family: var(--display); font-size: clamp(2.4rem, 4.4vw, 3.5rem); font-weight: 300;
+  line-height: 1; color: var(--rock); letter-spacing: -.02em;
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: 'lnum' 1, 'tnum' 1;
+}
+.stat__l { font-size: .92rem; margin: .7rem 0 .2rem; line-height: 1.35; }
+.stat__n { font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+
+/* ---- misc ---- */
+.rule { height: 1px; background: var(--line); border: 0; margin: 0; }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}

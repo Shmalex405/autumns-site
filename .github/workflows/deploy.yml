@@ -1,0 +1,61 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Let an in-flight deploy finish rather than cancelling it midway.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false # Pages serves LFS pointer files as text, not video. Never enable this.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx astro build
+        env:
+          # Publishable Web3Forms key. Set as a repository *variable* (Settings →
+          # Secrets and variables → Actions → Variables). It ships in the built HTML
+          # by design — the enquiry form cannot work without it being public.
+          PUBLIC_WEB3FORMS_KEY: ${{ vars.PUBLIC_WEB3FORMS_KEY }}
+
+      # A published Pages site is hard-capped at 1GB. Fail loudly here rather than
+      # letting the deploy step reject a site nobody has measured.
+      - name: Check published size against the 1GB Pages ceiling
+        run: |
+          BYTES=$(du -sb dist | cut -f1)
+          MB=$((BYTES / 1048576))
+          echo "dist is ${MB} MB (ceiling 1024 MB)"
+          BIG=$(find dist -type f -size +100M)
+          if [ -n "$BIG" ]; then echo "::error::Files over GitHub's 100MB blob limit:"; echo "$BIG"; exit 1; fi
+          if [ "$MB" -gt 1024 ]; then echo "::error::dist exceeds the 1GB Pages limit"; exit 1; fi
+          if [ "$MB" -gt 850 ]; then echo "::warning::${MB} MB — closing on the 1GB ceiling"; fi
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

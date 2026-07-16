@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro';
+import Reels from '../components/Reels.astro';
+import portfolio from '../data/portfolio.json';
+
+const { items, categories } = portfolio;
+const mins = Math.round(items.reduce((s, i) => s + i.dur, 0) / 60);
+---
+<Base
+  title="Portfolio"
+  description="Every piece — restaurants, local markets, home builders, tourism, beauty, family brands and FPV drone work across St. George and Southern Utah."
+>
+  <section class="page-head">
+    <div class="wrap">
+      <p class="eyebrow">Portfolio</p>
+      <h1>The <em>work</em>.</h1>
+      <p class="lede">
+        {items.length} pieces, {mins} minutes of finished video, shot across Southern Utah.
+        Filter by what you&rsquo;re looking for, or just start tapping.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <Reels items={items} filters={true} categories={categories} />
+    </div>
+  </section>
+
+  <section class="section section--sage">
+    <div class="wrap wrap--narrow" style="text-align:center">
+      <h2 style="color:#fff">See something<br />that fits <em style="color:var(--cream)">your brand</em>?</h2>
+      <p class="lede" style="margin:1.2rem auto 2rem">
+        Tell me what you&rsquo;re working on and I&rsquo;ll come back with a concept.
+      </p>
+      <div class="btn-row" style="justify-content:center">
+        <a href="/contact/" class="btn btn--onsage">Start a project</a>
+        <a href="/pricing/" class="btn btn--light">See pricing</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .page-head { padding-block: clamp(3rem, 7vw, 5.5rem) clamp(2rem, 4vw, 3rem); }
+  .page-head h1 { margin-bottom: 1.3rem; }
+  .page-head .lede { max-width: 52ch; }
+</style>

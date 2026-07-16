@@ -1,0 +1,149 @@
+---
+// Renders poster images only. The <video> src is attached at click time, never at
+// page load — 44 clips is 250MB, and eagerly loading them would burn the 100GB/month
+// GitHub Pages bandwidth allowance in roughly 300 visits.
+const { items, filters = false, categories = [] } = Astro.props;
+const mmss = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+---
+
+{filters && (
+  <div class="filters" role="group" aria-label="Filter work by category">
+    <button class="filter" data-filter="all" aria-pressed="true">All work</button>
+    {categories.map(c => (
+      <button class="filter" data-filter={c.id} aria-pressed="false">{c.label}</button>
+    ))}
+  </div>
+)}
+
+<div class="reels" data-reels>
+  {items.map((it, i) => (
+    <button
+      class="reel"
+      data-cat={it.cat}
+      data-slug={it.slug}
+      data-title={it.title}
+      data-brand={it.brand ?? ''}
+      data-desc={it.desc}
+      aria-label={`Play ${it.title}${it.brand ? ` for ${it.brand}` : ''}`}
+    >
+      <img
+        src={`/media/poster/${it.slug}.jpg`}
+        alt=""
+        width="540" height="960"
+        loading={i < 4 ? 'eager' : 'lazy'}
+        decoding="async"
+      />
+      <span class="reel__dur">{mmss(it.dur)}</span>
+      <span class="reel__play" aria-hidden="true">▶</span>
+      <span class="reel__scrim">
+        {it.brand && <span class="reel__brand">{it.brand}</span>}
+        <span class="reel__title">{it.title}</span>
+      </span>
+    </button>
+  ))}
+</div>
+
+<p class="reels__empty" data-empty hidden>Nothing in that category yet.</p>
+
+<dialog class="lb" data-lb aria-label="Video player">
+  <button class="lb__x" data-lb-close aria-label="Close">×</button>
+  <div class="lb__in">
+    <video class="lb__v" data-lb-video controls playsinline preload="none"></video>
+    <div class="lb__meta">
+      <p class="lb__brand" data-lb-brand></p>
+      <h2 class="lb__title" data-lb-title></h2>
+      <p class="lb__desc" data-lb-desc></p>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  .reels__empty { text-align: center; color: var(--muted); padding: 3rem 0; }
+
+  .lb {
+    border: 0; padding: 0; background: transparent; max-width: min(1000px, 94vw);
+    max-height: 92vh; overflow: visible;
+  }
+  .lb::backdrop { background: rgba(24, 20, 12, .88); backdrop-filter: blur(6px); }
+  .lb__in {
+    display: grid; grid-template-columns: minmax(0, 300px) 1fr; gap: clamp(1.2rem, 3vw, 2.5rem);
+    align-items: center; background: var(--paper); padding: clamp(1rem, 2.5vw, 1.6rem);
+    border-radius: var(--radius);
+  }
+  .lb__v {
+    width: 100%; aspect-ratio: 9 / 16; max-height: 76vh; background: #000;
+    border-radius: 2px; display: block;
+  }
+  .lb__brand {
+    font-size: .68rem; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--sage-deep); font-weight: 600; margin: 0 0 .7rem; min-height: 1em;
+  }
+  .lb__title { font-size: clamp(1.7rem, 3.4vw, 2.5rem); margin: 0 0 .9rem; }
+  .lb__desc { color: var(--muted); margin: 0; max-width: 46ch; }
+  .lb__x {
+    position: absolute; top: -2.6rem; right: 0; width: 2.2rem; height: 2.2rem;
+    border: 0; border-radius: 50%; background: rgba(255,255,255,.16); color: #fff;
+    font-size: 1.4rem; line-height: 1; cursor: pointer;
+  }
+  .lb__x:hover { background: rgba(255,255,255,.3); }
+  @media (max-width: 720px) {
+    .lb__in { grid-template-columns: 1fr; }
+    .lb__v { max-height: 56vh; margin-inline: auto; width: auto; }
+    .lb__desc { max-width: none; }
+  }
+</style>
+
+<script>
+  const lb = document.querySelector('[data-lb]') as HTMLDialogElement | null;
+  const video = document.querySelector('[data-lb-video]') as HTMLVideoElement | null;
+  const elBrand = document.querySelector('[data-lb-brand]');
+  const elTitle = document.querySelector('[data-lb-title]');
+  const elDesc = document.querySelector('[data-lb-desc]');
+  let lastFocus: HTMLElement | null = null;
+
+  document.querySelectorAll<HTMLButtonElement>('.reel').forEach((card) => {
+    card.addEventListener('click', () => {
+      if (!lb || !video) return;
+      lastFocus = card;
+      const { slug, title, brand, desc } = card.dataset;
+      if (elBrand) { elBrand.textContent = brand || ''; }
+      if (elTitle) elTitle.textContent = title ?? '';
+      if (elDesc) elDesc.textContent = desc ?? '';
+      // Fetch starts here and nowhere earlier.
+      video.src = `/media/video/${slug}.mp4`;
+      video.poster = `/media/poster/${slug}.jpg`;
+      lb.showModal();
+      video.play().catch(() => { /* autoplay blocked — controls are right there */ });
+    });
+  });
+
+  const close = () => {
+    if (!lb || !video) return;
+    video.pause();
+    video.removeAttribute('src');
+    video.load(); // drop the buffer so a closed video stops pulling bytes
+    lb.close();
+    lastFocus?.focus();
+  };
+
+  document.querySelector('[data-lb-close]')?.addEventListener('click', close);
+  lb?.addEventListener('close', () => { video?.pause(); video?.removeAttribute('src'); });
+  lb?.addEventListener('click', (e) => { if (e.target === lb) close(); });
+
+  // Filters
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('.reel'));
+  const empty = document.querySelector('[data-empty]') as HTMLElement | null;
+  document.querySelectorAll<HTMLButtonElement>('.filter').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const want = btn.dataset.filter;
+      document.querySelectorAll('.filter').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+      let shown = 0;
+      cards.forEach((c) => {
+        const hit = want === 'all' || c.dataset.cat === want;
+        c.style.display = hit ? '' : 'none';
+        if (hit) shown++;
+      });
+      if (empty) empty.hidden = shown > 0;
+    });
+  });
+</script>
